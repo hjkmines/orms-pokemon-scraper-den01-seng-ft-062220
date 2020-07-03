@@ -1,5 +1,5 @@
 class Pokemon
-   attr_accessor :name, :type, :id, :db, :hp
+  attr_accessor :name, :type, :id, :db, :hp
 
   def initialize (id, name, type, hp, db)
     @id = id
@@ -30,6 +30,7 @@ class Pokemon
     sql = <<-SQL
       UPDATE pokemon SET hp = ? WHERE id = ?;
     SQL
-    db.e
+    db.execute(sql, [new_hp, id])
+    end
   
 end
