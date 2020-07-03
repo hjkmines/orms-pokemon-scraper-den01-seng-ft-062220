@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS pokemons (
 id INTEGER PRIMARY KEY, 
 name TEXT, 
 type TEXT
-)
+);
 
