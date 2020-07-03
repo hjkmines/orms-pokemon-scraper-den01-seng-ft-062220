@@ -1,36 +1,35 @@
 class Pokemon
-  attr_accessor :name, :type, :db 
-  attr_reader :id 
-  
-  def initialize id = nil, name, type, db  
-    @id = id 
-    @name = name 
-    @type = name 
-    @db = db 
-  end 
-  
-  def save 
-    sql = <<-SQL 
-      INSERT INTO pokemons (name, type)
-      VALUES (?, ?)
+   attr_accessor :name, :type, :id, :db, :hp
+
+  def initialize (id, name, type, hp, db)
+    @id = id
+    @name = name
+    @type = type
+    @hp = hp
+    @db = db
+  end
+
+  def self.save(name, type, db)
+    sql = <<-SQL
+      INSERT INTO pokemon (name, type) VALUES (?, ?);
     SQL
-    DB[:conn].execute(sql, self.name, self.type, self.db)
-  end 
-  
-  def self.new_on_db(row)
-    id = row[0]
-    name = row[1]
-    type = row[2]
-    self.new(id, name, type)
-  end 
-  
-  def self.find(id) 
-  sql = <<-SQL   
-    SELECT * 
-    FROM pokemons 
-    WHERE id = ?
-  SQL
-  DB[:conn].execute(sql, id)
-  end 
+    
+    db.execute(sql, [name, type])
+    
+  end
+
+  def self.find(id, db)
+    sql = <<-SQL
+      SELECT * FROM pokemon WHERE id = (?);
+    SQL
+    pokemon = db.execute(sql, [id]).flatten
+    Pokemon.new(id, pokemon[1], pokemon[2], pokemon[3], db )
+  end
+
+  def alter_hp(new_hp)
+    sql = <<-SQL
+      UPDATE pokemon SET hp = ? WHERE id = ?;
+    SQL
+    db.e
   
 end
