@@ -14,7 +14,7 @@ class Pokemon
       INSERT INTO pokemons (name, type)
       VALUES (?, ?)
     SQL
-    DB[:conn].execute(sql, self.name, self.type)
+    DB[:conn].execute(sql, self.name, self.type, self.db)
   end 
   
   def self.new_on_db(row)
